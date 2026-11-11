@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 public final class DepositValidator {
 
     private DepositValidator() {
-        // utility class, not meant to be instantiated
+        // Prevent instantiation
     }
 
     /**
