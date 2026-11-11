@@ -10,6 +10,11 @@ import java.math.BigDecimal;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Unit tests for {@link TermDepositCalculator}.
+ * Expected values were calculated independently of the code (using Python's Decimal)
+ * and, for the first test, taken from the exercise brief.
+ */
 class TermDepositCalculatorTest {
 
     private TermDepositCalculator calculator;
@@ -19,6 +24,7 @@ class TermDepositCalculatorTest {
         calculator = new TermDepositCalculator();
     }
 
+    /** Small helper so each test reads as one line of input. */
     private TermDepositRequest request(String deposit, String rate, int years, InterestFrequency freq) {
         return new TermDepositRequest(new BigDecimal(deposit), new BigDecimal(rate), years, freq);
     }
@@ -32,6 +38,7 @@ class TermDepositCalculatorTest {
         assertEquals(new BigDecimal("330.00"), result.totalInterestEarned());
     }
 
+    /** 10000 * (1 + 0.05/12)^36 = 11614.72 */
     @Test
     void testMonthlyCompounding() {
         TermDepositResult result = calculator.calculate(request("10000.00", "5.0", 3, InterestFrequency.MONTHLY));
@@ -41,6 +48,7 @@ class TermDepositCalculatorTest {
         assertEquals(new BigDecimal("1614.72"), result.totalInterestEarned());
     }
 
+    /** 10000 * (1 + 0.05/4)^12 = 11607.55 */
     @Test
     void testQuarterlyCompounding() {
         TermDepositResult result = calculator.calculate(request("10000.00", "5.0", 3, InterestFrequency.QUARTERLY));
@@ -49,6 +57,7 @@ class TermDepositCalculatorTest {
         assertEquals(new BigDecimal("1607.55"), result.totalInterestEarned());
     }
 
+    /** 10000 * (1 + 0.05)^3 = 11576.25 */
     @Test
     void testAnnualCompounding() {
         TermDepositResult result = calculator.calculate(request("10000.00", "5.0", 3, InterestFrequency.ANNUALLY));
@@ -57,6 +66,7 @@ class TermDepositCalculatorTest {
         assertEquals(new BigDecimal("1576.25"), result.totalInterestEarned());
     }
 
+    /** Simple interest: 10000 * (1 + 0.05 * 3) = 11500.00 */
     @Test
     void testAtMaturityCalculation() {
         TermDepositResult result = calculator.calculate(request("10000.00", "5.0", 3, InterestFrequency.AT_MATURITY));
@@ -65,6 +75,7 @@ class TermDepositCalculatorTest {
         assertEquals(new BigDecimal("1500.00"), result.totalInterestEarned());
     }
 
+    /** With no interest the balance must equal the deposit. */
     @Test
     void testZeroInterestRateReturnsPrincipal() {
         TermDepositResult result = calculator.calculate(request("10000.00", "0", 3, InterestFrequency.MONTHLY));
@@ -72,6 +83,8 @@ class TermDepositCalculatorTest {
         assertEquals(new BigDecimal("10000.00"), result.finalBalance());
         assertEquals(new BigDecimal("0.00"), result.totalInterestEarned());
     }
+
+    // ---- Validation: bad input must be rejected with IllegalArgumentException ----
 
     @Test
     void testInvalidDepositThrowsException() {
