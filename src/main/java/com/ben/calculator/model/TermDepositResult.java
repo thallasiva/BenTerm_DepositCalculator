@@ -9,6 +9,7 @@ import java.math.BigDecimal;
  * @param totalInterestEarned interest earned over the whole term (finalBalance - initialDeposit)
  * @param finalBalance        the balance at the end of the term, including all interest
  */
+
 public record TermDepositResult(
     BigDecimal initialDeposit,
     BigDecimal totalInterestEarned,

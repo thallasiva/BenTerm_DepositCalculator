@@ -8,6 +8,7 @@ import java.math.BigDecimal;
  * Checks that a {@link TermDepositRequest} is sensible before any calculation happens.
  * Keeping validation here means the calculator only contains maths.
  */
+
 public final class DepositValidator {
 
     private DepositValidator() {

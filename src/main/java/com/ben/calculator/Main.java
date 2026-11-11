@@ -8,7 +8,6 @@ import com.ben.calculator.service.TermDepositCalculator;
 import java.math.BigDecimal;
 import java.util.Arrays;
 
-
 public class Main {
     public static void main(String[] args) {
         TermDepositRequest request;
@@ -24,7 +23,6 @@ public class Main {
             System.exit(1);
             return;
         }
-
         try {
             // Validation errors from the calculator are shown to the user, not as a stack trace.
             TermDepositResult result = new TermDepositCalculator().calculate(request);

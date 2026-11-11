@@ -15,6 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * Expected values were calculated independently of the code (using Python's Decimal)
  * and, for the first test, taken from the exercise brief.
  */
+
 class TermDepositCalculatorTest {
 
     private TermDepositCalculator calculator;

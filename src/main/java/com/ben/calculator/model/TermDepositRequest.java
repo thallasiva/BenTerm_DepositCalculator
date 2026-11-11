@@ -12,6 +12,7 @@ import java.math.BigDecimal;
  * @param investmentTermYears length of the deposit in whole years, e.g. 3
  * @param interestFrequency   how often interest is paid (monthly, quarterly, annually, at maturity)
  */
+
 public record TermDepositRequest(
     BigDecimal startDeposit,
     BigDecimal interestRatePercent,

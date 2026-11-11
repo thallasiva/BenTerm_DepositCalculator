@@ -8,6 +8,7 @@ package com.ben.calculator.enums;
  * {@link #AT_MATURITY} is the exception: interest is paid once at the end of the term,
  * so nothing is reinvested and simple interest applies.
  */
+
 public enum InterestFrequency {
     /** Interest paid and reinvested 12 times a year. */
     MONTHLY(12),

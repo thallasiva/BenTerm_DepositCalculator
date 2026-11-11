@@ -16,6 +16,7 @@ import java.math.RoundingMode;
  * which matters for money. Intermediate values keep full precision (DECIMAL128);
  * rounding to 2 decimal places happens once, at the very end.
  */
+
 public class TermDepositCalculator {
 
     /** 34 significant digits, far more precision than any realistic deposit needs. */
