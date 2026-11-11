@@ -8,10 +8,12 @@ import com.ben.calculator.service.TermDepositCalculator;
 import java.math.BigDecimal;
 import java.util.Arrays;
 
+
 public class Main {
     public static void main(String[] args) {
         TermDepositRequest request;
         try {
+            // Accept either no arguments (sample run) or exactly four.
             if (args.length != 0 && args.length != 4) {
                 throw new IllegalArgumentException("Expected 4 arguments but got " + args.length);
             }
@@ -24,8 +26,9 @@ public class Main {
         }
 
         try {
+            // Validation errors from the calculator are shown to the user, not as a stack trace.
             TermDepositResult result = new TermDepositCalculator().calculate(request);
-            System.out.println("Term Deposit Calculation");
+            System.out.println("=== Term Deposit Calculation Summary ===");
             System.out.println("Initial Investment : $" + result.initialDeposit());
             System.out.println("Interest Earned    : $" + result.totalInterestEarned());
             System.out.println("Final Balance      : $" + result.finalBalance());
@@ -35,12 +38,13 @@ public class Main {
         }
     }
 
+    /** Converts the raw command line text into a request, with a clear message for each bad value. */
     private static TermDepositRequest fromArgs(String[] args) {
         return new TermDepositRequest(
-                parseDecimal(args[0], "Deposit"),
-                parseDecimal(args[1], "Interest rate"),
-                parseWholeNumber(args[2], "Term (years)"),
-                parseFrequency(args[3])
+            parseDecimal(args[0], "Deposit"),
+            parseDecimal(args[1], "Interest rate"),
+            parseWholeNumber(args[2], "Term (years)"),
+            parseFrequency(args[3])
         );
     }
 
@@ -48,7 +52,7 @@ public class Main {
         try {
             return new BigDecimal(value);
         } catch (NumberFormatException e) {
-            throw new IllegalArgumentException(name + " must be number");
+            throw new IllegalArgumentException(name + " must be a number, but was '" + value + "'");
         }
     }
 
@@ -56,7 +60,7 @@ public class Main {
         try {
             return Integer.parseInt(value);
         } catch (NumberFormatException e) {
-            throw new IllegalArgumentException(name + " must be number");
+            throw new IllegalArgumentException(name + " must be a whole number, but was '" + value + "'");
         }
     }
 
@@ -65,16 +69,17 @@ public class Main {
             return InterestFrequency.valueOf(value.trim().toUpperCase());
         } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException("Unknown interest frequency '" + value
-                    + "'. Valid options: " + Arrays.toString(InterestFrequency.values()));
+                + "'. Valid options: " + Arrays.toString(InterestFrequency.values()));
         }
     }
 
+    /** The example from the exercise brief: expected final balance is $10,330.00. */
     private static TermDepositRequest sampleRequest() {
         return new TermDepositRequest(
-                new BigDecimal("10000.00"),
-                new BigDecimal("5.50"),
-                3,
-                InterestFrequency.AT_MATURITY
+            new BigDecimal("10000.00"),
+            new BigDecimal("1.10"),
+            3,
+            InterestFrequency.AT_MATURITY
         );
     }
 }
